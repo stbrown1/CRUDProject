@@ -4,6 +4,7 @@ namespace MySQLProject
 {
     public class Weapons
     {
+        public int WeaponID { get; set; }
         public string WeaponName { get; set; }
         public int WeaponType { get; set; }
         public int Rarity { get; set; }
