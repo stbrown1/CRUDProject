@@ -15,6 +15,7 @@ namespace MySQLProject
             connectionString = _connectionString;
         }
 
+        //queries weapons DB to display all entries.
         public List<Weapons> GetWeapons()
         {
             MySqlConnection conn = new MySqlConnection(connectionString);
@@ -46,6 +47,7 @@ namespace MySQLProject
             }
         }
 
+        //adds new entry into weapons DB
         public void CreateWeapon (Weapons weapons)
         {
             MySqlConnection conn = new MySqlConnection(connectionString);
@@ -63,6 +65,22 @@ namespace MySQLProject
                 cmd.Parameters.AddWithValue("attack", weapons.Attack);
                 cmd.Parameters.AddWithValue("impact", weapons.Impact);
                 cmd.Parameters.AddWithValue("magazine", weapons.Magazine);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        //deletes entry from weapons DB by their ID
+        public void DeleteWeapon(int id)
+        {
+            MySqlConnection conn = new MySqlConnection(connectionString);
+
+            using (conn)
+            {
+                conn.Open();
+
+                MySqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "DELETE FROM weapons WHERE WeaponID = @weapId;";
+                cmd.Parameters.AddWithValue("weapId", id);
                 cmd.ExecuteNonQuery();
             }
         }
