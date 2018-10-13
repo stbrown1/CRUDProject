@@ -37,6 +37,21 @@ namespace MySQLProject
             Console.WriteLine("Which would you like to take from the armory?");
             Console.WriteLine("Please select by entering it's ID number:");
             Console.ReadLine();
+
+
+
+            Console.WriteLine("Press any key to generate a new weapon in the armory!");
+            Console.ReadLine();
+
+            Console.WriteLine("Generating new weapon!");
+            var newWeapon = new Weapons { WeaponName = "Trinity Ghoul", WeaponType = 15, Rarity = 5, Slot = "Energy", Attack = 600, Impact = 80, Magazine = 1 };
+            weaponsRepo.CreateWeapon(newWeapon);
+            Console.WriteLine("Weapon Generated!");
+            Console.ReadLine();
+
+
+
+
         }
     }
 }
