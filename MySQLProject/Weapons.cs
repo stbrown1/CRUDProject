@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace MySQLProject
 {
@@ -12,5 +13,6 @@ namespace MySQLProject
         public int Attack { get; set; }
         public int Impact { get; set; }
         public int Magazine { get; set; }
+
     }
 }

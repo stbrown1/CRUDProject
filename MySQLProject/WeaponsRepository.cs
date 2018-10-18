@@ -15,7 +15,7 @@ namespace MySQLProject
             connectionString = _connectionString;
         }
 
-        //queries weapons DB to display all entries.
+        //queries weapons table to display all entries.
         public List<Weapons> GetWeapons()
         {
             MySqlConnection conn = new MySqlConnection(connectionString);
@@ -47,7 +47,7 @@ namespace MySQLProject
             }
         }
 
-        //adds new entry into weapons DB
+        //adds new entry into weapons table
         public void CreateWeapon (Weapons weapons)
         {
             MySqlConnection conn = new MySqlConnection(connectionString);
@@ -69,7 +69,7 @@ namespace MySQLProject
             }
         }
 
-        //deletes entry from weapons DB by their ID
+        //deletes entry from weapons table by it's ID
         public void DeleteWeapon(int id)
         {
             MySqlConnection conn = new MySqlConnection(connectionString);
@@ -81,6 +81,45 @@ namespace MySQLProject
                 MySqlCommand cmd = conn.CreateCommand();
                 cmd.CommandText = "DELETE FROM weapons WHERE WeaponID = @weapId;";
                 cmd.Parameters.AddWithValue("weapId", id);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        //Deletes entry from weapons table by it's name
+        public void DeleteWeapon(string name)
+        {
+            MySqlConnection conn = new MySqlConnection(connectionString);
+
+            using (conn)
+            {
+                conn.Open();
+
+                MySqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "DELETE FROM weapons WHERE WeaponName = @weapName;";
+                cmd.Parameters.AddWithValue("weapName", name);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        //Updates entry in weapons table
+        public void UpdateWeapon(string weapName, int weapType, int weapRarity, string weapSlot, int weapAttack, int weapImpact, int weapMagazine, int weapID )
+        {
+            MySqlConnection conn = new MySqlConnection(connectionString);
+
+            using (conn)
+            {
+                conn.Open();
+
+                MySqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "UPDATE weapons SET WeaponName = @name, WeaponType = @type, Rarity = @rarity, Slot = @slot, Attack = @attack, Impact = @impact, Magazine = @magazine WHERE WeaponID = @id;";
+                cmd.Parameters.AddWithValue("name", weapName);
+                cmd.Parameters.AddWithValue("type", weapType);
+                cmd.Parameters.AddWithValue("rarity", weapRarity);
+                cmd.Parameters.AddWithValue("slot", weapSlot);
+                cmd.Parameters.AddWithValue("attack", weapAttack);
+                cmd.Parameters.AddWithValue("impact", weapImpact);
+                cmd.Parameters.AddWithValue("magazine", weapMagazine);
+                cmd.Parameters.AddWithValue("id", weapID);
                 cmd.ExecuteNonQuery();
             }
         }

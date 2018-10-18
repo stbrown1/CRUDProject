@@ -9,9 +9,11 @@ namespace MySQLProject
     {
         public static void Main(string[] args)
         {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                 .SetBasePath(Directory.GetCurrentDirectory())
-                 .AddJsonFile("appsettings.json")
+            while (true)
+            {
+                IConfigurationRoot configuration = new ConfigurationBuilder()
+                     .SetBasePath(Directory.GetCurrentDirectory())
+                     .AddJsonFile("appsettings.json")
 #if DEBUG
                 .AddJsonFile("appsettings.DEBUG.json")
 #else
@@ -19,53 +21,53 @@ namespace MySQLProject
 #endif
                 .Build();
 
-            string connString = configuration.GetConnectionString("DefaultConnection");
+                string connString = configuration.GetConnectionString("DefaultConnection");
 
-            var weaponsRepo = new WeaponsRepository(connString);
-
-            var weaponsList = weaponsRepo.GetWeapons();
-
-            Console.WriteLine("Welcome to the Destiny 2 Armory!");
-
-            weapsAvailable();
-            //Console.WriteLine("Here is what we have available:");
-
-            //foreach (Weapons weapons in weaponsList)
-            //{
-
-            //    Console.WriteLine($"{weapons.WeaponID} -- {weapons.WeaponName} -- {weapons.WeaponType} -- {weapons.Rarity} -- {weapons.Rarity} -- {weapons.Slot} -- {weapons.Attack} -- {weapons.Impact} -- {weapons.Magazine}");
-            //}
-
-            //Console.WriteLine("Which would you like to take from the armory?");
-            //Console.WriteLine("Please select by entering it's ID number:");
-            //Console.ReadLine();
+                var weaponsRepo = new WeaponsRepository(connString);
 
 
 
-            //Console.WriteLine("Press any key to generate a new weapon in the armory!");
-            //Console.ReadLine();
+                Console.WriteLine("Welcome to the Destiny 2 Armory!");
+                Console.WriteLine(" ");
 
-            //Console.WriteLine("Generating new weapon!");
-            //var newWeapon = new Weapons { WeaponName = "Trinity Ghoul", WeaponType = 15, Rarity = 5, Slot = "Energy", Attack = 600, Impact = 80, Magazine = 1 };
-            //weaponsRepo.CreateWeapon(newWeapon);
-            //Console.WriteLine("Weapon Generated!");
-            //Console.ReadLine();
+                var weaponsOne = new MenuOps(weaponsRepo);
 
-            //Console.WriteLine("Please enter");
+                weaponsOne.MainMenu();
 
+                int selection = UserInput.GetIntegerResponse("Please enter the number for your selection: ");
 
-            void weapsAvailable()
-            {
-                Console.WriteLine("Here is what we have available:");
-
-                foreach (Weapons weapons in weaponsList)
+                if (selection == 1)
                 {
-
-                    Console.WriteLine($"{weapons.WeaponID} -- {weapons.WeaponName} -- {weapons.WeaponType} -- {weapons.Rarity} -- {weapons.Rarity} -- {weapons.Slot} -- {weapons.Attack} -- {weapons.Impact} -- {weapons.Magazine}");
+                    weaponsOne.WpnsAvailable();
                 }
+                else if (selection == 2)
+                {
+                    weaponsOne.WpnCreate();
+                }
+                else if (selection == 3)
+                {
+                    weaponsOne.WpnUpdate();
+                }
+                else if (selection == 4)
+                {
+                    weaponsOne.WpnRemove();
+                }
+                else if (selection == 5)
+                {
+                    Console.WriteLine("Thank you for visiting!");
+
+                    Console.WriteLine("Good Bye!");
+                    break;
+                }
+                else
+                {
+                    UserInput.GetIntegerResponse("Please enter a selection fom the menu options: ");
+                }
+
+                Console.WriteLine();
+                Console.WriteLine("Press any key to return to the Main Menu!");
+                Console.ReadLine();
             }
-
-
         }
     }
 }
